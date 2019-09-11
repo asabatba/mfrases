@@ -1,9 +1,10 @@
 
 
-demo.csv
+*.csv
 *.db
 *.db-journal
 lang_freq/*.txt
+.~lock.*
 
 
 
@@ -133,4 +134,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
