@@ -3,7 +3,7 @@ import re
 import sqlite3
 import concurrent.futures
 
-NUM_OF_PAGES_TO_LOAD = 500
+NUM_OF_PAGES_TO_LOAD = 1000
 
 # ?action=query&generator=random&grnnamespace=0&grnlimit=2&prop=info&format=json
 
@@ -52,11 +52,12 @@ def page_parse(page):
 if __name__ == "__main__":
 
     litecon = sqlite3.connect('mfrases.db')
-    cursor = litecon.cursor()
+    
 
     api_url = 'https://es.wikiquote.org/w/api.php'
 
     while (True):
+        cursor = litecon.cursor()
         p = {'action': 'query', 'list': 'random',
              'rnlimit': NUM_OF_PAGES_TO_LOAD, 'format': 'json'}
         response = requests.get(api_url, params=p)
@@ -90,4 +91,5 @@ if __name__ == "__main__":
         #     litecon.commit()
 
         litecon.commit()
+
     cursor.close()
