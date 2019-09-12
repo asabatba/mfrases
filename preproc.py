@@ -20,6 +20,9 @@ word_dict = {}
 usable_count = 0
 total_count = 0
 
+fo = open('oraciones.txt', 'w+', encoding='UTF-8')
+
+
 for (idx, row) in enumerate(cursor.execute("SELECT quote_text FROM wikiquote")):
     # print("{}. {}".format(idx, row[0]))
 
@@ -43,6 +46,8 @@ for (idx, row) in enumerate(cursor.execute("SELECT quote_text FROM wikiquote")):
         if (is_spanish == True and is_banned == False):
             # print(o)
             usable_count += 1
+            fo.write(o + '\n')
+
             for word in palabras:
                 word = re.sub(r"[^\w]", "", word)
                 if re.match(r"[\w]+", word) == None:
@@ -57,7 +62,9 @@ for (idx, row) in enumerate(cursor.execute("SELECT quote_text FROM wikiquote")):
     if idx == 100000:
         break
 
-print('{} / {} can be used!'.format(usable_count, total_count))
+fo.close()
+
+print('{} / {} quotes can be used!'.format(usable_count, total_count))
 
 with open('wordcount.csv', 'w', newline='', encoding='UTF-8') as f:
     writer = csv.writer(f)
